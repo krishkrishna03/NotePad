@@ -13,6 +13,17 @@ export const NoteProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const { isAuthenticated } = useAuth();
 
+  // Set Axios default Authorization header if authenticated
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (isAuthenticated && token) {
+      axios.defaults.baseURL = 'https://notepad-l5fs.onrender.com/api';
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, [isAuthenticated]);
+
   // Fetch notes when authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -72,8 +83,8 @@ export const NoteProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.put(`/notes/${id}`, noteData);
-      setNotes(prevNotes => 
-        prevNotes.map(note => 
+      setNotes(prevNotes =>
+        prevNotes.map(note =>
           note._id === id ? { ...note, ...res.data.data } : note
         )
       );
@@ -107,10 +118,10 @@ export const NoteProvider = ({ children }) => {
     try {
       const noteToUpdate = notes.find(note => note._id === id);
       if (!noteToUpdate) return;
-      
-      const updatedNote = await updateNote(id, { 
-        ...noteToUpdate, 
-        pinned: !isPinned 
+
+      const updatedNote = await updateNote(id, {
+        ...noteToUpdate,
+        pinned: !isPinned
       });
       return updatedNote;
     } catch (err) {
@@ -127,7 +138,7 @@ export const NoteProvider = ({ children }) => {
     createNote,
     updateNote,
     deleteNote,
-    togglePinNote
+    togglePinNote,
   };
 
   return <NoteContext.Provider value={value}>{children}</NoteContext.Provider>;
