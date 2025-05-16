@@ -12,10 +12,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(express.json());
-app.use(cookieParser());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://notepadk.netlify.app'
+];
+
 app.use(cors({
-  origin: 'https://notepadk.netlify.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
