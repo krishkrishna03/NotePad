@@ -23,20 +23,17 @@ export const register = async (req, res, next) => {
     }
 
     // Create new user
-    const user = await User.create({
-      username,
-      email,
-      password
-    });
+    const user = await User.create({ username, email, password });
 
     // Generate token
     const token = generateToken(user._id);
 
-    // Set cookie
+    // Set cookie (important for cross-origin)
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      secure: process.env.NODE_ENV === 'production'
+      secure: true,
+      sameSite: 'None',
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
     res.status(201).json({
@@ -66,7 +63,7 @@ export const login = async (req, res, next) => {
       });
     }
 
-    // Check if password matches
+    // Check password
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(401).json({
@@ -78,11 +75,12 @@ export const login = async (req, res, next) => {
     // Generate token
     const token = generateToken(user._id);
 
-    // Set cookie
+    // Set cookie (important for cross-origin)
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      secure: process.env.NODE_ENV === 'production'
+      secure: true,
+      sameSite: 'None',
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
     res.status(200).json({
@@ -101,7 +99,11 @@ export const login = async (req, res, next) => {
 // Logout user
 export const logout = async (req, res, next) => {
   try {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None'
+    });
     res.status(200).json({
       success: true,
       message: 'Logged out successfully'
@@ -115,7 +117,7 @@ export const logout = async (req, res, next) => {
 export const getCurrentUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-    
+
     res.status(200).json({
       success: true,
       user: {
