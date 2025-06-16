@@ -1,15 +1,17 @@
+// Home.tsx
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiEdit3, FiLayout, FiSmartphone, FiLock } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className="flex flex-col min-h-[calc(100vh-80px)]">
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-neutral-50 to-secondary-50 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
         <div className="responsive-container">
           <div className="flex flex-col lg:flex-row items-center">
-            <motion.div 
+            <motion.div
               className="lg:w-1/2 mb-10 lg:mb-0"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -30,7 +32,8 @@ const Home = () => {
                 </Link>
               </div>
             </motion.div>
-            <motion.div 
+
+            <motion.div
               className="lg:w-1/2"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -75,73 +78,46 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div 
-              className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center text-primary-600 dark:text-primary-400 mb-4">
-                <FiEdit3 size={24} />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Rich Text Editor</h3>
-              <p className="text-neutral-600 dark:text-neutral-400">
-                Format your notes with style. Add headings, lists, and more to organize your thoughts.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-12 h-12 bg-secondary-100 dark:bg-secondary-900/30 rounded-lg flex items-center justify-center text-secondary-600 dark:text-secondary-400 mb-4">
-                <FiLayout size={24} />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Organize & Find</h3>
-              <p className="text-neutral-600 dark:text-neutral-400">
-                Group notes by categories and find them instantly with powerful search.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center text-accent-600 dark:text-accent-400 mb-4">
-                <FiSmartphone size={24} />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Responsive Design</h3>
-              <p className="text-neutral-600 dark:text-neutral-400">
-                Access your notes from any device with our beautiful responsive interface.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-12 h-12 bg-neutral-200 dark:bg-neutral-700 rounded-lg flex items-center justify-center text-neutral-700 dark:text-neutral-300 mb-4">
-                <FiLock size={24} />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Secure & Private</h3>
-              <p className="text-neutral-600 dark:text-neutral-400">
-                Your notes are encrypted and secure. Only you can access them.
-              </p>
-            </motion.div>
+            {[{
+              Icon: FiEdit3,
+              title: "Rich Text Editor",
+              desc: "Format your notes with style. Add headings, lists, and more to organize your thoughts.",
+              color: "primary"
+            }, {
+              Icon: FiLayout,
+              title: "Organize & Find",
+              desc: "Group notes by categories and find them instantly with powerful search.",
+              color: "secondary",
+              delay: 0.1
+            }, {
+              Icon: FiSmartphone,
+              title: "Responsive Design",
+              desc: "Access your notes from any device with our beautiful responsive interface.",
+              color: "accent",
+              delay: 0.2
+            }, {
+              Icon: FiLock,
+              title: "Secure & Private",
+              desc: "Your notes are encrypted and secure. Only you can access them.",
+              color: "neutral",
+              delay: 0.3
+            }].map(({ Icon, title, desc, color, delay = 0 }, index) => (
+              <motion.div
+                key={index}
+                className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-lg"
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay }}
+                viewport={{ once: true }}
+              >
+                <div className={`w-12 h-12 bg-${color}-100 dark:bg-${color}-900/30 rounded-lg flex items-center justify-center text-${color}-600 dark:text-${color}-400 mb-4`}>
+                  <Icon size={24} />
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">{title}</h3>
+                <p className="text-neutral-600 dark:text-neutral-400">{desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -155,7 +131,10 @@ const Home = () => {
           <p className="text-lg text-white/90 max-w-xl mx-auto mb-8">
             Join thousands of users who trust MiNote for their note-taking needs.
           </p>
-          <Link to="/register" className="inline-block bg-white text-primary-600 hover:bg-neutral-100 hover:text-primary-700 transition-colors px-8 py-3 rounded-lg font-medium">
+          <Link
+            to="/register"
+            className="inline-block bg-white text-primary-600 hover:bg-neutral-100 hover:text-primary-700 transition-colors px-8 py-3 rounded-lg font-medium"
+          >
             Get Started — It's Free
           </Link>
         </div>
