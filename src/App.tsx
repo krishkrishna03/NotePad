@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import ThemeToggle from './components/ThemeToggle';
+import Home from './Home';
+
 
 const App: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -48,11 +50,14 @@ const App: React.FC = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
           <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
           <Routes>
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
-            <Route path="*" element={<NotFound />} />
+            <Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+  <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
+  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
+
           </Routes>
         </div>
       </div>
