@@ -8,7 +8,6 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import ThemeToggle from './components/ThemeToggle';
-import Home from './Home';
 
 
 const App: React.FC = () => {
@@ -51,7 +50,7 @@ const App: React.FC = () => {
           <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
           <Routes>
             <Routes>
-  <Route path="/" element={<Home />} />
+  <Route path="/" element={<Login />} />
   <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
   <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
   <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
