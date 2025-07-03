@@ -5,9 +5,9 @@ import { useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import ThemeToggle from './components/ThemeToggle';
+import Home from './Home';
 
 
 const App: React.FC = () => {
@@ -49,13 +49,11 @@ const App: React.FC = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
           <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
           <Routes>
-            <Routes>
-  <Route path="/" element={<Login />} />
+           
+  <Route path="/" element={<Home />} />
   <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
   <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
   <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-  <Route path="*" element={<NotFound />} />
-</Routes>
 
           </Routes>
         </div>
