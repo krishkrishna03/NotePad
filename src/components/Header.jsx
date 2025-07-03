@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Layout, Dropdown, Avatar, Typography, Button, message } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { NotebookPen } from 'lucide-react';
@@ -54,8 +55,10 @@ const Header = () => {
           <NotebookPen size={24} />
         </div>
         <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-          NoteHub
-        </span>
+  <Link to="/">
+    NoteHub
+  </Link>
+</span>
       </div>
       
       <Dropdown menu={dropdownItems} placement="bottomRight" arrow>
